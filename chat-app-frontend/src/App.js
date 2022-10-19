@@ -31,7 +31,7 @@ function App() {
     <div className="app">
       <h2>Let`s Chat</h2>
       <hr  />
-      <Main />
+      <Main joinRoom={joinRoom} />
     </div>
   );
 }
