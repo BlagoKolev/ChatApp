@@ -22,6 +22,8 @@ function App() {
         setMessages(messages => [...messages, { user, message }]);
       });
 
+      
+
       await connection.start();
       await connection.invoke('JoinRoom', { user, room });
       setConnection(connection);
@@ -38,6 +40,8 @@ function App() {
       console.log(e);
     }
   }
+
+ 
 
   return (
     <div className="app">
