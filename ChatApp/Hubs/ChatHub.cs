@@ -11,6 +11,17 @@ namespace ChatApp.Hubs
             this.bot = "Chat-Bot";
             this._connections = connections;
         }
+
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            if (this._connections.TryGetValue(Context.ConnectionId, out UserConnection userConnection))
+            {
+                this._connections.Remove(Context.ConnectionId);
+                Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", this.bot, $"{userConnection.User} has left the {userConnection.Room}.");
+            }
+            return base.OnDisconnectedAsync(exception);
+        }
+
         public async Task JoinRoom(UserConnection userConnection)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room);
