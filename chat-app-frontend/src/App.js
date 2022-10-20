@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Lobby from './components/Lobby';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { useState } from 'react';
+import Lobby from './components/Lobby';
 import Chat from './components/Chat';
 
 function App() {
@@ -30,12 +30,21 @@ function App() {
       console.log(e)
     }
   }
+
+  const sendMessage = async (message) => {
+    try {
+      await connection.invoke("SendMessage", message);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <div className="app">
       <h2>Let`s Chat</h2>
       <hr />{!connection
         ? <Lobby joinRoom={joinRoom} />
-        : <Chat messages={messages} />
+        : <Chat messages={messages} sendMessage={sendMessage} />
       }
 
     </div>

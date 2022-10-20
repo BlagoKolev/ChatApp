@@ -78,3 +78,16 @@ hr.line {
   margin-bottom: 3px;
   margin-right: 5px;
 }
+
+.send-message {
+  display: flex;
+  
+}
+
+.send-field {
+  flex-basis: 70%;
+}
+
+.send-btn {
+  flex-basis: 10%;
+}

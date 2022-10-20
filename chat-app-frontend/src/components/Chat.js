@@ -1,10 +1,15 @@
-import MessageContainer from "./MessageContainer";
+import MessageContainer from './MessageContainer';
+import SendMessageForm from './SendMessageForm';
 
 
-const Chat = ({messages}) => <div>
-    <div className="chat">
-        <MessageContainer messages={messages} />
-    </div>
-</div>
+function Chat({ messages, sendMessage }) {
 
+    return (
+        <div className="chat">
+            <MessageContainer messages={messages} />
+            <SendMessageForm sendMessage={sendMessage} />
+
+        </div>
+    )
+}
 export default Chat;
