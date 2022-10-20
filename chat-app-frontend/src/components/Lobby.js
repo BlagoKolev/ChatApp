@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-function Main({joinRoom}) {
+function Lobby({joinRoom}) {
     const [user, setUser] = useState();
     const [room, setRoom] = useState();
 
@@ -21,4 +21,4 @@ function Main({joinRoom}) {
     );
 }
 
-export default Main;
+export default Lobby;

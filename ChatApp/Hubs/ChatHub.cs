@@ -12,7 +12,7 @@ namespace ChatApp.Hubs
         public async Task JoinRoom(UserConnection userConnection)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room);
-            await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", this.bot, $"{userConnection.User}has joined {userConnection.Room}.");
+            await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", this.bot, $"{userConnection.User} has joined {userConnection.Room}.");
         }
     }
 }

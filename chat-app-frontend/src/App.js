@@ -1,26 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Main from './components/Main';
+import Lobby from './components/Lobby';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import {useState} from 'react';
+import { useState } from 'react';
+import Chat from './components/Chat';
 
 function App() {
   const [connection, setConnection] = useState();
+  const [messages, setMessages] = useState([]);
 
   const joinRoom = async (user, room) => {
     try {
       const connection = new HubConnectionBuilder()
-      .withUrl('https://localhost:7035/chat')
-      .configureLogging(LogLevel.Information)
-      .build();
+        .withUrl('https://localhost:7035/chat')
+        .configureLogging(LogLevel.Information)
+        .build();
 
-      connection.on("ReceiveMessage", (user,message) => {
-        console.log('message received: ', message);
+      connection.on("ReceiveMessage", (user, message) => {
+        // console.log('message received: ', message);
+        setMessages(messages => [...messages, { user, message }]);
       });
 
       await connection.start();
-      await connection.invoke('JoinRoom', {user, room});
+      await connection.invoke('JoinRoom', { user, room });
       setConnection(connection);
 
     } catch (e) {
@@ -30,8 +33,11 @@ function App() {
   return (
     <div className="app">
       <h2>Let`s Chat</h2>
-      <hr  />
-      <Main joinRoom={joinRoom} />
+      <hr />{!connection
+        ? <Lobby joinRoom={joinRoom} />
+        : <Chat messages={messages} />
+      }
+
     </div>
   );
 }
